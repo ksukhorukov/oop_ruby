@@ -1,1 +1,1 @@
-# oop_ruby
+# Practical Object Oriented Design in Ruby
