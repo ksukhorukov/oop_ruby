@@ -12,9 +12,17 @@ class Gear
     chainring / cog.to_f
   end
 
+  # def gear_inches
+  #   ratio * wheel.diameter
+  # end 
+
   def gear_inches
-    ratio * wheel.diameter
-  end 
+    ratio * diameter
+  end
+
+  def diameter
+    wheel.diameter
+  end
 
 end
 
