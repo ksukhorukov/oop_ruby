@@ -14,6 +14,10 @@ class Bicycle
     raise NotImplementedError, 
         "This #{self.class} cannot respond to:"
   end
+
+  def spares
+    { chain: chain, tire_size: tire_size }
+  end 
 end
 
 class RoadBike < Bicycle
@@ -25,9 +29,7 @@ class RoadBike < Bicycle
   end
 
   def spares
-    { chain: '10-speed',
-    tire_size: '23',
-    tape_color: tape_color }
+    super.merge({ tape_color: tape_color })
   end
 
   def default_tire_size 
@@ -51,9 +53,7 @@ class MountainBike < Bicycle
 
   # checking "style" starts down a slippery slope
   def spares
-    { chain: '10-speed',
-      tire_size: '23',
-      rear_shock: rear_shock }  
+      super.merge({ rear_shock: rear_shock })
   end
 
   def default_tire_size 
