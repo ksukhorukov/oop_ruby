@@ -39,7 +39,7 @@ class RoadBike < Bicycle
 end
 
 class MountainBike < Bicycle
-  attr_reader :style, :tape_color, :front_shock, :rear_shock
+  attr_reader :front_shock, :rear_shock
 
   def initialize(args)
     @tape_color = args[:tape_color]
