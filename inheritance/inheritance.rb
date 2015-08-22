@@ -21,7 +21,8 @@ class Bicycle
     else
           { chain: '10-speed',
         tire_size: '23',
-        rear_shock: rear_shock } 
+        rear_shock: rear_shock }
+    end 
   end
 
   #Many other methods
