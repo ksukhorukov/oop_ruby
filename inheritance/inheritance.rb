@@ -4,6 +4,12 @@ class Bicycle
     @size = args[:size] 
     @chain = args[:chain]  || default_chain
     @tire_size = args[:tire_size] || default_tire_size
+
+    post_initialize(args)
+  end
+
+  def post_initialize(args) # and implements this nil
+    nil
   end
 
   def default_chain
@@ -16,20 +22,23 @@ class Bicycle
   end
 
   def spares
-    { chain: chain, tire_size: tire_size }
+    { chain: chain, tire_size: tire_size }.merge(local_spares)
   end 
+
+  def local_spares
+    {}
+  end
 end
 
 class RoadBike < Bicycle
   attr_reader :tape_color
 
-  def initialize(args)
+  def post_initialize(args) # RoadBike can @tape_color = args[:tape_color] # optionally
     @tape_color = args[:tape_color]
-    super(args) # <- RoadBike now MUST send 'super'
   end
 
-  def spares
-    super.merge({ tape_color: tape_color })
+  def local_spares
+    { tape_color: tape_color }
   end
 
   def default_tire_size 
@@ -41,19 +50,17 @@ end
 class MountainBike < Bicycle
   attr_reader :front_shock, :rear_shock
 
-  def initialize(args)
-    @tape_color = args[:tape_color]
+  def post_initialize(args)
     @front_shock = args[:front_shock]
     @rear_shock = args[:rear_shock]
-    super(args)
   end
 
   #every bike has the same defaults
   #for tire and chain size 
 
   # checking "style" starts down a slippery slope
-  def spares
-      super.merge({ rear_shock: rear_shock })
+  def local_spares
+      { rear_shock: rear_shock }
   end
 
   def default_tire_size 
