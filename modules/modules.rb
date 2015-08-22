@@ -73,3 +73,27 @@ b = Bicycle.new
 b.schedulable?(starting, ending)
 # This Bicycle is not scheduled
 # between 2015-09-03 and 2015-09-10 # => true
+
+
+class Vehicle
+  include Schedulable
+  def lead_days
+    3
+  end
+end
+
+class Mechanic
+  include Schedulable
+  def lead_days
+    4
+  end
+end
+
+v = Vehicle.new 
+v.schedulable?(starting, ending)
+# This Vehicle is not scheduled
+# between 2015-09-01 and 2015-09-10 # => true
+m = Mechanic.new 
+m.schedulable?(starting, ending)
+# This Mechanic is not scheduled
+# between 2015-02-29 and 2015-09-10 # => true
