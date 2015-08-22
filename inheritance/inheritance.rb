@@ -2,10 +2,18 @@ class Bicycle
   attr_reader :size, :chain, :tire_size    # <- promoted from RoadBike
   def initialize(args={})
     @size = args[:size] 
-    @chain = args[:chain] 
-    @tire_size = args[:tire_size]
+    @chain = args[:chain]  || default_chain
+    @tire_size = args[:tire_size] || default_tire_size
   end
 
+  def default_chain
+    '10-speed'
+  end
+
+  def default_tire_size 
+    raise NotImplementedError, 
+        "This #{self.class} cannot respond to:"
+  end
 end
 
 class RoadBike < Bicycle
@@ -21,10 +29,15 @@ class RoadBike < Bicycle
     tire_size: '23',
     tape_color: tape_color }
   end
+
+  def default_tire_size 
+    '23'
+  end
+
 end
 
 class MountainBike < Bicycle
-  attr_reader :style, :size, :tape_color, :front_shock, :rear_shock
+  attr_reader :style, :tape_color, :front_shock, :rear_shock
 
   def initialize(args)
     @tape_color = args[:tape_color]
@@ -43,7 +56,12 @@ class MountainBike < Bicycle
       rear_shock: rear_shock }  
   end
 
-  #Many other methods
+  def default_tire_size 
+    '2.1'
+  end
+end
+
+class RecumbentBike < Bicycle
 end
 
 road_bike = RoadBike.new( size: 'M',
@@ -53,3 +71,4 @@ mountain_bike = MountainBike.new( size: 'S',
                         front_shock:  'Manitou',
                         rear_shock:   'Fox')
 mountain_bike.size # -> 'S'
+bent = RecumbentBike.new
