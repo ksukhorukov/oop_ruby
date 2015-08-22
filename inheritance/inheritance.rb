@@ -1,8 +1,11 @@
 class Bicycle
-  attr_reader :size     # <- promoted from RoadBike
+  attr_reader :size, :chain, :tire_size    # <- promoted from RoadBike
   def initialize(args={})
-    @size = args[:size] # <- promoted from RoadBike
+    @size = args[:size] 
+    @chain = args[:chain] 
+    @tire_size = args[:tire_size]
   end
+
 end
 
 class RoadBike < Bicycle
@@ -12,17 +15,22 @@ class RoadBike < Bicycle
     @tape_color = args[:tape_color]
     super(args) # <- RoadBike now MUST send 'super'
   end
+
+  def spares
+    { chain: '10-speed',
+    tire_size: '23',
+    tape_color: tape_color }
+  end
 end
 
 class MountainBike < Bicycle
   attr_reader :style, :size, :tape_color, :front_shock, :rear_shock
 
   def initialize(args)
-    @size =  args[:size]
-    @tape_color = args[:tape_color]
     @tape_color = args[:tape_color]
     @front_shock = args[:front_shock]
     @rear_shock = args[:rear_shock]
+    super(args)
   end
 
   #every bike has the same defaults
@@ -30,15 +38,9 @@ class MountainBike < Bicycle
 
   # checking "style" starts down a slippery slope
   def spares
-    if style == :road 
-      { chain: '10-speed',
-        tire_size: '23',
-        tape_color: tape_color }
-    else
-          { chain: '10-speed',
-        tire_size: '23',
-        rear_shock: rear_shock }
-    end 
+    { chain: '10-speed',
+      tire_size: '23',
+      rear_shock: rear_shock }  
   end
 
   #Many other methods
